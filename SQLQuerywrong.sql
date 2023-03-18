@@ -1,0 +1,33 @@
+use NF
+
+CREATE TABLE Worker (
+WORKER_ID INT NOT NULL PRIMARY KEY,
+FIRST_NAME CHAR(25),
+LAST_NAME CHAR(25),
+SALARY INT,
+JOINING_DATE DATETIME,
+DEPARTMENT CHAR(25)
+);
+
+insert into  worker values (006, 'Vipul', 'Diwan', 200000, '2014-06-11 09:00:00' , 'Account'),
+(007, 'Satish', 'Kumar', 75000, '2014-01-20 09:00:00', 'Account'),
+(008, 'Geetika', 'Chauhan', 90000, '2014-04-11 09:00:00', 'Admin');
+
+select*from worker
+
+CREATE TABLE Bonus (
+WORKER_REF_ID INT,
+BONUS_AMOUNT INT,
+BONUS_DATE DATETIME,
+FOREIGN KEY (WORKER_REF_ID)
+REFERENCES Worker(WORKER_ID)
+ON DELETE CASCADE,
+AFFECTED_FROM DATETIME,
+FOREIGN KEY (WORKER_REF_ID)
+REFERENCES Worker(WORKER_ID)
+ON DELETE no action
+);
+
+select*from bonus
+drop table Worker
+drop table Bonus

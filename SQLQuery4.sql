@@ -31,7 +31,7 @@ INSERT INTO  dep1  values (100,'Developerr'),(101,'UI/UX')
  )
  --INSERTING value to ADRESS
  insert into NF1.address values(1,'Manchester United','England',641008)
-  insert into NF1.address values (2,'Real MAdrid','Spain',642009)
+  insert into NF1.address values (3,'Real MAdrid','Spain',642009)
 
   create synonym add2 for NF1.address
   --viewing the table
@@ -54,14 +54,29 @@ INSERT INTO  dep1  values (100,'Developerr'),(101,'UI/UX')
 
   --inserting values to table Employee
 
-  insert into Employee values (1,'JOHN','Developerr',100,9597303632,7639040891,'Wellington',2),(2,'James','UI/UX',100,9597303630,7639040871,'Damascus',2),
+  insert into Employee values (1,'JOHN','Developerr',100,9597303632,7639040891,'Wellington',3),(2,'James','UI/UX',100,9597303630,7639040871,'Damascus',3)
   insert into Employee values (3,'Jammy','UI/UX',100,9597303330,7639045871,'Eden',1), (4,'Jane
   ','UI/UX',100,9597303630,7639040871,'Damascus',2)
 
-  drop table Employee
+
 
   --viewing all three tables
   select * from Employee
    select * from add2
     select * from dep1
+
+
+	alter table Employee DROP CONSTRAINT FK__Employee__E_ADDR 
+
+	alter table Employee add CONSTRAINT FK__Employee__E_ADDR FOREIGN KEY (E_ADDRESS_ID) REFERENCES NF1.ADDRESS (ADDRESS_ID) ON DELETE set null ON UPDATE set null
+	----------------------------------------------------------------------------------------------------------------------
+
+	
+
+	SELECT * FROM add2
+
+
+	 delete  from add2  WHERE  ADDRESS_ID=3
+	  update add2 set address_id=3 where ADDRESS_ID=5
+
 
