@@ -96,17 +96,22 @@ create Synonym tab for NF1 . [dbo].[Employee]
  select * from tab
 
  --10.) Show the working of IDENTITY_INSERT.
+ -- creating table empdetails to show the working of IDENTITY_INSERT.
  create table empdetails(
  id int identity(1,1),
  name varchar(20),
  salary money,
  increment money)
 
+-- inserting table values 
+insert into empdetails(name,salary,increment) values ('varma',30000,5000),('lohith',25000,5000),('vikram',18000,5000)
+-- to stop the auto increase of identity
+set identity_insert empdetails on;
  
- insert into empdetails(name,salary,increment) values ('varma',30000,5000),('lohith',25000,5000),('vikram',18000,5000)
-
- set identity_insert empdetails on;
- insert into empdetails(id,name,salary,increment) values(100,'Alfin',20000,3000) 
-  set identity_insert empdetails off;
-   insert into empdetails(name,salary,increment) values('Siva',10000,2000) 
-    select *from empdetails
+insert into empdetails(id,name,salary,increment) values(100,'Alfin',20000,3000) 
+  -- to again start the auto increase of identity
+set identity_insert empdetails off;
+   
+insert into empdetails(name,salary,increment) values('Siva',10000,2000) 
+   
+select *from empdetails
