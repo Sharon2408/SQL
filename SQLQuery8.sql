@@ -36,3 +36,67 @@ insert into Student values('DivyaPrakash','Bsc-It',498),('Rohit','Bsc-It',480),(
 	  SELECT Student_name,Department,Score,
 RANK () OVER (ORDER BY Score desc) AS Rank_Holders   
 FROM Student
+
+--5. Apply Dense_Rank() for students in each department based on score.
+     
+	 SELECT Student_Name,Department,Score,
+DENSE_RANK() OVER (partition by Department ORDER BY Score desc) AS Rank_Holders   
+FROM Student; 
+
+--b. Create 2 tables Manager(id(pk), name) and Employee(eid(pk),ename,mid(fk), department).
+
+       Create Table Manager(
+	   M_id int primary key ,
+	   M_name varchar(20) );
+
+	   Create Table Emp(
+	   E_id int primary key,E_name varchar(20),
+	   M_id int foreign key references Manager(M_id) default 3,
+	   Department varchar(20));
+
+-- Inserting value to the table Manager and Emp
+ insert into Manager values (1,'Durairaj'),
+ (2,'Escobar'),
+ (3,'Bond'),
+ (4,'Rolex')
+ 
+ insert into Emp values (1,'Hari',1,'Science'),
+ (2,'Karthick',2,'History'),
+ (3,'Santhosh',3,'Geography'),
+ (4,'Hemanth',4,'Economics'),
+ (5,'Prakash',3,'Geography'),
+ (6,'Vasanth',1,'Science')
+
+ --Viewing table Manager an Emp
+ 
+ 
+
+
+	  -- 1. Create a complex view by retrieving the records from Manager and Employee table.
+                
+				create view Mng as 
+                SELECT  m.M_name, e.E_id,e.E_name,e.M_id,e.Department
+                FROM Manager AS m
+                FULL JOIN
+                Emp AS e
+                ON m.M_id = e.M_id
+
+-- Viewing the view
+                select * from Mng
+
+
+      --2. Show the working of 'on delete cascade on update set default' for the above tables
+
+	  	alter table Emp DROP CONSTRAINT   [FK__Emp__M_id ]
+
+alter table Emp add CONSTRAINT  [FK__Emp__M_id ] FOREIGN KEY (M_id) REFERENCES Manager (M_id) ON DELETE cascade ON UPDATE set default
+
+         delete  from Manager  WHERE  M_id=4
+	  
+	  update Manager set M_id=4
+	  where M_id=2
+
+	  select * from Manager
+	    select * from Emp
+	   set identity_insert Manager on
+	    
