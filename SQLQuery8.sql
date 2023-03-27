@@ -94,7 +94,7 @@ alter table Emp add CONSTRAINT  [FK__Emp__M_id ] FOREIGN KEY (M_id) REFERENCES M
          delete  from Manager  WHERE  M_id=4
 	  
 	  update Manager set M_id=4
-	  where M_id=2
+	  where M_id=1
 
 	  select * from Manager
 	    select * from Emp
