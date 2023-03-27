@@ -53,3 +53,25 @@ insert into Stu values ( 1,'John','Sem 1',450,500),(2,'Sharon','Sem 2',447,500),
  declare @stud_det int
  exec Details @stud_det output
  print 'Student Details ' + convert(varchar(30),@stud_det)
+
+ --6.)Show the working of Merge Statement by creating a backup for the students details of only students in Sem 1.
+ create table Stubackup  ( student_id int, studentname varchar(20), semester varchar(10), securedmarks int, totalmarks int)
+
+ select * from Stu
+ select * from Stubackup
+
+ MERGE  Stubackup s
+    USING  (select * from Stu where semester='Sem 1') as t
+ON (s.student_id = t.student_id)
+WHEN MATCHED
+    THEN UPDATE SET 
+	    s.student_id=t.student_id,
+        s.studentname = t.studentname,
+        s.securedmarks = t.securedmarks,
+		s.semester=t.semester,
+		s.totalmarks=t.totalmarks
+		WHEN NOT MATCHED BY TARGET 
+THEN INSERT (student_id,studentname,securedmarks,semester,totalmarks)
+         VALUES (t.student_id,t.studentname,t.securedmarks,t.semester,t.totalmarks)
+WHEN NOT MATCHED BY SOURCE 
+    THEN DELETE;
