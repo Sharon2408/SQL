@@ -61,5 +61,40 @@ drop table Task12
 --2.) Create a database for Library Management. 
 --Analyse the required columns, perform a normalization and link the tables using primary and foreign key (using on update set default)
 
+create table book (
+Book_ID int primary key,
+Book_Name varchar(20),
+Author varchar(20)
+)
 
+insert into Book values (1,'Wings Of Fire','APJ.Abdul Kalam'),(2,'The Alchemist','Paulo Coelho'),(3,'It Ends With Us','Coleen Hoover'),(4,'half-girlfriend','Chetan Baghat')
+insert into Book values(5,'No_Book','No_Author')
+select * from book
+drop table book
 
+--creating Table library
+create table Library (
+Customer_ID int primary key ,
+Customer_Name varchar(20),
+Book_ID int foreign key references book(Book_ID) )
+
+drop table Library
+
+insert into Library values (1,'Sharon',2), (2,'Harshan',1),(3,'Hari',3),(4,'Hemanth',1) 
+select * from Library
+
+alter table Library DROP CONSTRAINT   [FK__Library__Book_ID__2C538F61]
+alter table Library drop column Book_ID
+
+alter table Library add  Book_ID int default 5 CONSTRAINT  [FK__Library__Book_ID__lib_book] FOREIGN KEY (Book_ID) REFERENCES Book (Book_ID)ON UPDATE set default
+
+      delete  from Book  WHERE Book_ID=3
+	  
+	  update Library set Book_ID=3
+	  where book_ID=1
+	  
+	  insert into   Library (Customer_ID,Customer_Name) values (5,'Karthi')
+	  select * from Library
+	  select * from book
+
+	  truncate table Library 
