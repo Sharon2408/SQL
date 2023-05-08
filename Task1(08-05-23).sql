@@ -117,7 +117,7 @@ SELECT * FROM Employee WHERE Salary NOT between  20000 and 30000;
 SELECT * FROM Employee WHERE Salary > 20000 AND Department = 'IT';
 -- e. List out records of the employees whose salary = 10000, 20000 , 30000 using IN operator and using OR operator
 SELECT * FROM Employee WHERE salary IN (10000, 20000, 30000);
-SELECT * FROM Employee WHERE Salary = 10000 | 20000 | 30000;
+SELECT * FROM Employee WHERE Salary = 10000 OR 20000 OR 30000;
 -- f. List out records of the employees whose names starts with S
 SELECT * FROM Employee WHERE Emp_name LIKE 'S%';
 -- g. List out records of the employees whose names ends with ‘in’
