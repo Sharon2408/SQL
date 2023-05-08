@@ -19,9 +19,10 @@ insert into Student values('DivyaPrakash','Bsc-It',498),('Rohit','Bsc-It',480),(
 
 --1. Create a non-clustered index for department
  
-      create index stud_details on Student (Department asc)
+      create index stud_details on Student (Department )
 	  exec sp_helpindex Student
 
+	  drop index Student .stud_details
 --2.  Create a filtered index for department='BCA'
      create index stud_dep_BCA on Student (Department asc) where Department='BCA'
 	   exec sp_helpindex Student
@@ -34,8 +35,21 @@ insert into Student values('DivyaPrakash','Bsc-It',498),('Rohit','Bsc-It',480),(
 --4. Apply Rank() for all the students based on score.
      
 	  SELECT Student_name,Department,Score,
-RANK () OVER (ORDER BY Score desc) AS Rank_Holders   
+ntile (5) OVER ( ORDER BY Score desc) AS Rank_Holders   
 FROM Student
+
+
+SELECT Student_Name,Department,score,
+ROW_NUMBER() OVER (ORDER BY score desc) AS Roll_No   
+FROM Student; 
+
+SELECT 
+    Student_Name,Department,Score,
+    FIRST_VALUE(Department) OVER(ORDER BY score) first_value
+FROM 
+    Student;
+
+select Student_ID,Student_Name from Student
 
 --5. Apply Dense_Rank() for students in each department based on score.
      
@@ -74,10 +88,10 @@ FROM Student;
 
 	  -- 1. Create a complex view by retrieving the records from Manager and Employee table.
                 
-				create view Mng as 
+				alter view Mng as 
                 SELECT  m.M_name, e.E_id,e.E_name,e.M_id,e.Department
                 FROM Manager AS m
-                FULL JOIN
+                full JOIN
                 Emp AS e
                 ON m.M_id = e.M_id
 
